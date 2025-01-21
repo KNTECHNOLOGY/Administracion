@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Principal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .menu-container {
+            text-align: center;
+        }
+        h1 {
+            color: #007BFF;
+            margin-bottom: 30px;
+        }
+        .menu-button {
+            display: inline-block;
+            margin: 15px;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .menu-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <h1>Menú Principal</h1>
+        <button class="menu-button" onclick="window.location.href='inventario_Medicina.html'">Inventario de Medicamentos</button>
+        <button class="menu-button" onclick="window.location.href='inventario_Administracion.html'">Inventario Administración</button>
+        <button class="menu-button" onclick="window.location.href='inventario_Dinamica.html'">Inventario Dinámica</button>
+    </div>
+</body>
+</html>
