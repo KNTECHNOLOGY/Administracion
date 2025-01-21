@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,8 +60,7 @@
     </style>
 </head>
 <body>
-    <h1>Gestión de Inventario Administración</h1>
-    <input type="file" id="upload" accept=".xlsx, .xls" />
+    <h1>Gestión de Inventario Medicamentos</h1>
     <button id="add-row">Agregar Fila</button>
     <button id="export">Exportar Inventario</button>
     <table id="inventory">
@@ -82,30 +81,30 @@
     </table>
 
     <script>
-        const upload = document.getElementById('upload');
         const exportButton = document.getElementById('export');
         const addRowButton = document.getElementById('add-row');
         const inventoryTable = document.getElementById('inventory').querySelector('tbody');
         let inventoryData = [];
 
-        // Leer archivo Excel
-        upload.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
+        // URL del archivo Excel en GitHub (asegúrate de reemplazarla con la tuya)
+        const excelFileUrl = 'https://raw.githubusercontent.com/usuario/repositorio/rama/INVENTARIO%20BOTIQUIN%20prueba.xlsx';
 
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                const sheetName = workbook.SheetNames[0];
-                const sheet = workbook.Sheets[sheetName];
+        // Leer archivo Excel desde GitHub
+        function loadExcelFile() {
+            fetch(excelFileUrl)
+                .then(response => response.arrayBuffer())  // Asegúrate de obtener el archivo como binario
+                .then(data => {
+                    const workbook = XLSX.read(data, { type: 'array' });  // Procesa el archivo binario
+                    const sheetName = workbook.SheetNames[0];
+                    const sheet = workbook.Sheets[sheetName];
 
-                inventoryData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
-
-                populateTable(inventoryData);
-            };
-            reader.readAsArrayBuffer(file);
-        });
+                    inventoryData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+                    populateTable(inventoryData);
+                })
+                .catch(error => {
+                    console.error('Error al cargar el archivo Excel:', error);
+                });
+        }
 
         // Llenar la tabla con datos
         function populateTable(data) {
@@ -123,7 +122,7 @@
             });
         }
 
-        // Agregar acciones
+        // Agregar acciones (guardar, eliminar)
         function addActions(row, index) {
             const td = document.createElement('td');
             const saveButton = document.createElement('button');
@@ -180,9 +179,13 @@
 
             XLSX.writeFile(workbook, 'inventario.xlsx');
         });
+
+        // Cargar el archivo de Excel al iniciar
+        loadExcelFile();
     </script>
 </body>
 </html>
+
 
 
 
